@@ -1,0 +1,35 @@
+{
+  "name": "naes",
+  "version": "1.0.0",
+  "description": "Node AES implementation",
+  "main": "dist/index.js",
+  "engine": "node ^6.0.0",
+  "scripts": {
+    "build": "tsc",
+    "linter": "tslint -c .tslint.json -t verbose ./src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isoung/naes.git"
+  },
+  "author": "Isaiah Soung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isoung/naes/issues"
+  },
+  "homepage": "https://github.com/Isoung/naes#readme",
+  "devDependencies": {
+    "@types/es6-promise": "0.0.32",
+    "@types/node": "^6.0.49",
+    "@types/randomstring": "^1.1.5",
+    "bitwise-xor": "0.0.0",
+    "tslint": "^4.0.1",
+    "typescript": "^2.0.10"
+  },
+  "dependencies": {
+    "bitwise-xor": "0.0.0",
+    "es6-promises": "^1.0.10",
+    "randomstring": "^1.1.5"
+  }
+}
