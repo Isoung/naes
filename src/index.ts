@@ -1,7 +1,7 @@
-import { AESCore } from './core';
+import { AES } from './aes';
 
-const buffer = Buffer.from([
-  0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c
-]);
+const key = '3daf0acbcae42e1f765a4efb52d92fc1ad305831bbf5770c6c7af8f50491b84f65e668158d060a196023b0041eea483a73170c70c954402e4acf2ce055ec796318c2771c36a789174b225c0f5eea80894c3835d49d0b3bc3e44c2b05e37a317f1e7d9bb556b00b80b51bf4210c100220b7200e0a2d40819a8506fcf0cfaf';
+const cipherText = AES.encrypt('This is a super long message that needs to be encrypted by AES00', key, 126);
+const plaintext = AES.decrypt(cipherText, key, 126);
 
-console.log(AESCore._keyExpansion(buffer, 126).toString('hex'));
+console.log(plaintext);
