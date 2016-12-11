@@ -68,6 +68,7 @@ export class AESCore {
     }
   }
 
+  // http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf 5.3.1
   public static invShiftRows(state: Buffer) {
     const tempBuffer = Buffer.from(state);
 
@@ -92,12 +93,14 @@ export class AESCore {
     state[15] = tempBuffer[3];
   }
 
+  // http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf 5.3.2
   public static invSubBytes(state: Buffer) {
     for (let i = 0; i < state.length; i++) {
       state[i] = Number(Boxes.inverseSBox[state[i]]);
     }
   }
 
+  // http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf 5.3.3
   public static invMixColumns(state: Buffer) {
     // 09 11 13 14
     // 09 0b 0d 0e
@@ -153,11 +156,10 @@ export class AESCore {
 
   // https://en.wikipedia.org/wiki/Rijndael_key_schedule#The_key_schedule
   public static keyExpansion(keyBuffer: Buffer, keyLength: number): Buffer {
-    // Currently only expands a 126 bit key.
-    const returnBuffer = Buffer.alloc(176);
+    const returnBuffer = Buffer.alloc(this._getKeySizes(keyLength));
     keyBuffer.copy(returnBuffer, 0, 0, keyBuffer.length);
-    let n = 16;
-    const b = 176;
+    let n = this._getRoundKeySizes(keyLength);
+    const b = this._getKeySizes(keyLength);
     let rconValue = 1;
 
     while (n !== b) {
@@ -177,5 +179,27 @@ export class AESCore {
     }
 
     return returnBuffer;
+  }
+
+  private static _getKeySizes(keyLength: number): number {
+    switch (keyLength) {
+      case 192:
+        return 208;
+      case 256:
+        return 240;
+      default:
+        return 176;
+    }
+  }
+
+  private static _getRoundKeySizes(keyLength: number): number {
+    switch (keyLength) {
+      case 192:
+        return 24;
+      case 256:
+        return 32;
+      default:
+        return 16;
+    }
   }
 }
