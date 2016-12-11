@@ -1,8 +1,26 @@
+import * as crypto from 'crypto';
 import { AES } from './aes';
 
-// const key = '3daf0acbcae42e1f765a4efb52d92fc1ad305831bbf5770c6c7af8f50491b84f65e668158d060a196023b0041eea483a73170c70c954402e4acf2ce055ec796318c2771c36a789174b225c0f5eea80894c3835d49d0b3bc3e44c2b05e37a317f1e7d9bb556b00b80b51bf4210c100220b7200e0a2d40819a8506fcf0cfaf';
-const key = AES.generateKey(256);
-const cipherText = AES.encrypt('This is a super long message that needs to be encrypted by AES00', key, 256);
-const plaintext = AES.decrypt(cipherText, key, 256);
+console.time('naes');
+const naesKey = AES.generateKey(256);
+const naesCipherText = AES.encrypt('This is a super long message that needs to be encrypted by AES00', naesKey, 256);
+const naesPlaintext = AES.decrypt(naesCipherText, naesKey, 256);
+console.timeEnd('naes');
 
-console.log(plaintext);
+console.time('crypto');
+const cryptoCipher = crypto.createCipher('aes256', 'thisisareallylongkey');
+const cryptoDecipher = crypto.createDecipher('aes256', 'thisisareallylongkey');
+
+let cryptoEncrypted = cryptoCipher.update('This is a super long message that needs to be encrypted by AES00', 'utf8', 'hex');
+cryptoEncrypted += cryptoCipher.final('hex');
+
+let cryptoDecrypted = cryptoDecipher.update(cryptoEncrypted, 'hex', 'utf8');
+cryptoDecrypted += cryptoDecipher.final('utf8');
+console.timeEnd('crypto');
+
+console.time('crypto-js');
+import * as cryptojs from 'crypto-js';
+const cjsCiphertext = cryptojs.AES.encrypt('This is a super long message that needs to be encrypted by AES00', 'thisisareallylongkey');
+const cjsBytes = cryptojs.AES.decrypt(cjsCiphertext.toString(), 'thisisareallylongkey');
+const cjsPlaintext = cjsBytes.toString(cryptojs.enc.Utf8);
+console.timeEnd('crypto-js');
