@@ -1,5 +1,6 @@
 # naes
-* Built with Typescript which is compiled into Javascript
+# PURELY FOR EDUCATIONAL USES. SHOULD NOT BE USED IN PRODUCTION.
+### Built with Typescript which is compiled into Javascript
 
 # Usage
 ```Typescript
