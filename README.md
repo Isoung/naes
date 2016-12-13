@@ -1,4 +1,4 @@
-# naes
+# naes (Node AES)
 # PURELY FOR EDUCATIONAL USES. SHOULD NOT BE USED IN PRODUCTION.
 ### Built with Typescript which is compiled into Javascript
 
